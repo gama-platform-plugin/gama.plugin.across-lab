@@ -21,8 +21,10 @@
 
     <!-- ── Modules: add one entry per plugin/feature in this repo ── -->
     <modules>
-        <module>../gama.plugin.across-lab</module>
-        <module>../gama.plugin.feature.across-lab</module>
+        <module>../gama.plugin.flooding</module>
+        <module>../gama.plugin.feature.flooding</module>
+        <module>../gama.extension.pmml</module>
+        <module>../gama.extension.feature.pmml</module>
         <module>../gama.plugin.p2updatesite</module>
     </modules>
 
@@ -64,7 +66,7 @@
         </dependency>
         <dependency>
             <groupId>org.gama</groupId>
-            <artifactId>gama.api</artifactId>
+            <artifactId>gama.core</artifactId>
             <version>${gama.version}</version>
         </dependency>
     </dependencies>
