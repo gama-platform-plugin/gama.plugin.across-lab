@@ -5,7 +5,8 @@ Bundle-SymbolicName: gama.extension.pmml;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Export-Package: gama.extension.pmml.skills
 Require-Bundle: gama.core;bundle-version="0.0.0",
- gama.dependencies;bundle-version="0.0.0"
+ gama.dependencies;bundle-version="0.0.0",gama.annotations,
+ gama.processor,gama.api
 Automatic-Module-Name: gama.extension.pmml
 Bundle-ClassPath: .,
  lib/commons-math3-3.6.1.jar,
@@ -22,4 +23,4 @@ Bundle-ClassPath: .,
  lib/pmml-model-1.6.5.jar,
  lib/pmml-model-metro-1.6.5.jar,
  lib/txw2-3.0.2.jar
-Bundle-RequiredExecutionEnvironment: JavaSE-21
+Bundle-RequiredExecutionEnvironment: JavaSE-25
