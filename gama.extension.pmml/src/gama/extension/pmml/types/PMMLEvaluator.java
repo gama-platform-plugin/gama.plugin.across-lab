@@ -10,11 +10,13 @@ import org.jpmml.evaluator.InputField;
 import org.jpmml.evaluator.OutputField;
 import org.jpmml.evaluator.TargetField;
 
-import gama.core.common.interfaces.IValue;
-import gama.core.runtime.IScope;
-import gama.core.runtime.exceptions.GamaRuntimeException;
-import gama.core.util.file.json.Json;
-import gama.core.util.file.json.JsonValue;
+import gama.api.exceptions.GamaRuntimeException;
+import gama.api.gaml.types.IType;
+import gama.api.gaml.types.Types;
+import gama.api.runtime.scope.IScope;
+import gama.api.types.misc.IValue;
+import gama.api.utils.json.IJson;
+import gama.api.utils.json.IJsonValue;
 
 public class PMMLEvaluator implements Evaluator, IValue{
 	
@@ -31,7 +33,12 @@ public class PMMLEvaluator implements Evaluator, IValue{
 	}
 	
 	@Override
-	public JsonValue serializeToJson(Json json) {
+	public IType<?> getGamlType() {
+		return Types.get(PMMLEvaluatorType.id);
+	}
+
+	@Override
+	public IJsonValue serializeToJson(final IJson json) {
 		return json.typedObject(getGamlType());
 	}
 

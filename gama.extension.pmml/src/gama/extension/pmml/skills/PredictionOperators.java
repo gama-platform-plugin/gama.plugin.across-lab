@@ -1,6 +1,6 @@
 package gama.extension.pmml.skills;
 
-import static gama.core.common.util.FileUtils.constructAbsoluteFilePath;
+import static gama.api.utils.files.FileUtils.constructAbsoluteFilePath;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,18 +12,18 @@ import org.jpmml.evaluator.EvaluatorUtil;
 import org.jpmml.evaluator.LoadingModelEvaluatorBuilder;
 import org.xml.sax.SAXException;
 
-import gama.annotations.precompiler.GamlAnnotations.doc;
-import gama.annotations.precompiler.GamlAnnotations.no_test;
-import gama.annotations.precompiler.GamlAnnotations.operator;
-import gama.core.runtime.GAMA;
-import gama.core.runtime.IScope;
-import gama.core.runtime.exceptions.GamaRuntimeException;
-import gama.core.util.GamaListFactory;
-import gama.core.util.GamaMapFactory;
-import gama.core.util.IList;
-import gama.core.util.IMap;
+import gama.annotations.doc;
+import gama.annotations.no_test;
+import gama.annotations.operator;
+import gama.api.GAMA;
+import gama.api.exceptions.GamaRuntimeException;
+import gama.api.gaml.types.Types;
+import gama.api.runtime.scope.IScope;
+import gama.api.types.list.GamaListFactory;
+import gama.api.types.list.IList;
+import gama.api.types.map.GamaMapFactory;
+import gama.api.types.map.IMap;
 import gama.extension.pmml.types.PMMLEvaluator;
-import gama.gaml.types.Types;
 import jakarta.xml.bind.JAXBException;
 
 public class PredictionOperators {
@@ -74,7 +74,7 @@ public class PredictionOperators {
 		}
 		catch (Exception ex) {
 			GAMA.reportAndThrowIfNeeded(scope, GamaRuntimeException.create(ex, scope), false);
-			return GamaListFactory.EMPTY_LIST;
+			return GamaListFactory.create(Types.NO_TYPE);
 		}
 		return ret;
 	}
@@ -92,7 +92,7 @@ public class PredictionOperators {
 		}
 		catch (Exception ex) {
 			GAMA.reportAndThrowIfNeeded(scope, GamaRuntimeException.create(ex, scope), false);
-			return GamaListFactory.EMPTY_LIST;
+			return GamaListFactory.create(Types.NO_TYPE);
 		}
 		return ret;
 	}
@@ -109,7 +109,7 @@ public class PredictionOperators {
 		}
 		catch (Exception ex) {
 			GAMA.reportAndThrowIfNeeded(scope, GamaRuntimeException.create(ex, scope), false);
-			return GamaListFactory.EMPTY_LIST;
+			return GamaListFactory.create(Types.NO_TYPE);
 		}
 		return ret;
 	}

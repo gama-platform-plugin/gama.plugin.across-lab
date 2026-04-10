@@ -2,18 +2,21 @@ package gama.extension.pmml.types;
 
 import org.jpmml.evaluator.Evaluator;
 
-import gama.annotations.precompiler.GamlAnnotations.type;
-import gama.annotations.precompiler.IConcept;
-import gama.core.runtime.IScope;
-import gama.core.runtime.exceptions.GamaRuntimeException;
+import gama.annotations.type;
+import gama.annotations.support.IConcept;
+import gama.api.exceptions.GamaRuntimeException;
+import gama.api.gaml.types.GamaType;
+import gama.api.gaml.types.IType;
+import gama.api.gaml.types.ITypesManager;
+import gama.api.runtime.scope.IScope;
 import gama.extension.pmml.skills.PredictionOperators;
-import gama.gaml.types.GamaType;
-import gama.gaml.types.IType;
 
 @type(name = "evaluator", id = PMMLEvaluatorType.id, wraps = { PMMLEvaluator.class }, concept = { IConcept.TYPE, "pmml" })
 public class PMMLEvaluatorType extends GamaType<PMMLEvaluator>{
 
-	final static int id = IType.AVAILABLE_TYPES + 4532236;
+	final static int id = IType.BEGINNING_OF_CUSTOM_TYPES + 4532236;
+
+	public PMMLEvaluatorType(final ITypesManager tm) { super(tm); }
 
 	@Override
 	public PMMLEvaluator getDefault() {

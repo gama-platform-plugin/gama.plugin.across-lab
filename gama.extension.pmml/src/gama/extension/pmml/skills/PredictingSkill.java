@@ -12,24 +12,24 @@ import org.xml.sax.SAXException;
 
 import com.google.common.base.Strings;
 
-import gama.annotations.precompiler.GamlAnnotations.action;
-import gama.annotations.precompiler.GamlAnnotations.arg;
-import gama.annotations.precompiler.GamlAnnotations.doc;
-import gama.annotations.precompiler.GamlAnnotations.getter;
-import gama.annotations.precompiler.GamlAnnotations.skill;
-import gama.annotations.precompiler.GamlAnnotations.variable;
-import gama.annotations.precompiler.GamlAnnotations.vars;
-import gama.core.runtime.GAMA;
-import gama.core.runtime.IScope;
-import gama.core.runtime.exceptions.GamaRuntimeException;
-import gama.core.util.GamaListFactory;
-import gama.core.util.GamaMapFactory;
-import gama.core.util.IList;
-import gama.core.util.IMap;
-import gama.core.util.file.GamaFile;
-import gama.gaml.skills.Skill;
-import gama.gaml.types.IType;
-import gama.gaml.types.Types;
+import gama.annotations.action;
+import gama.annotations.arg;
+import gama.annotations.doc;
+import gama.annotations.getter;
+import gama.annotations.skill;
+import gama.annotations.variable;
+import gama.annotations.vars;
+import gama.api.GAMA;
+import gama.api.exceptions.GamaRuntimeException;
+import gama.api.gaml.types.IType;
+import gama.api.gaml.types.Types;
+import gama.api.kernel.skill.Skill;
+import gama.api.runtime.scope.IScope;
+import gama.api.types.file.GamaFile;
+import gama.api.types.list.GamaListFactory;
+import gama.api.types.list.IList;
+import gama.api.types.map.GamaMapFactory;
+import gama.api.types.map.IMap;
 import jakarta.xml.bind.JAXBException;
 
 @skill(name="predicting",
@@ -135,7 +135,7 @@ public class PredictingSkill extends Skill {
 			}
 			catch (Exception ex) {
 				GAMA.reportAndThrowIfNeeded(scope, GamaRuntimeException.create(ex, scope), false);
-				return GamaListFactory.EMPTY_LIST;
+				return GamaListFactory.create(Types.NO_TYPE);
 			}
 		}
 		return ret;
@@ -163,7 +163,7 @@ public class PredictingSkill extends Skill {
 			}
 			catch (Exception ex) {
 				GAMA.reportAndThrowIfNeeded(scope, GamaRuntimeException.create(ex, scope), false);
-				return GamaListFactory.EMPTY_LIST;
+				return GamaListFactory.create(Types.NO_TYPE);
 			}
 		}
 		return ret;
@@ -191,7 +191,7 @@ public class PredictingSkill extends Skill {
 			}
 			catch (Exception ex) {
 				GAMA.reportAndThrowIfNeeded(scope, GamaRuntimeException.create(ex, scope), false);
-				return GamaListFactory.EMPTY_LIST;
+				return GamaListFactory.create(Types.NO_TYPE);
 			}
 		}
 		return ret;

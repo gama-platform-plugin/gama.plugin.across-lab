@@ -40,8 +40,8 @@ global {
 	init{
 		
 		//we extract the initial data and create one simulation object for each point
-		create items from:locations_and_classes_csv_file with:[class::int(read("color"))]{
-			location <- {float(read("x")) - x_min, float(read("y")) - y_min, 0};
+		create items(colorIndex:int(get("color"))) from: locations_and_classes_csv_file{
+			location <- {float(get("x")) - x_min, float(get("y")) - y_min, 0};
 		}	
 		
 		// we create an additional point in the simulation to represent the mouse
@@ -64,12 +64,12 @@ global {
 // they have a location (built-in the agents) and a class
 // they will be displayed at their initial location with a different color for each class
 species items {
-	int class;
+	int colorIndex;
 	
 	geometry shape <- circle(1);
 	
 	aspect default{
-		draw shape color: class_to_color[class] at:location;
+		draw shape color: class_to_color[colorIndex] at:location;
 	}
 }
 
@@ -103,7 +103,7 @@ experiment test {
 				// user_mouse object
 				ask world{
 					mouse.location <- loc;
-					mouse.class <- int(estimated_class["cluster"]);
+					mouse.colorIndex <- int(estimated_class["cluster"]);
 				}
 			}
 		}
