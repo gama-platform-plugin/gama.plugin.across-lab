@@ -63,7 +63,7 @@ global {
    }
    
       // === NEW DYKE REMOVAL ACTION ===
-   action toggle_dyke_removal {
+   action toggle_dyke_removal() {
    	ask simulation_manager {
    		do toggle_dyke_removal_mode();
    		dyke_removal_active <- is_dyke_removal_mode();
@@ -88,7 +88,7 @@ global {
    }
 
    // === ENHANCED DYKE BUILDING ACTIONS ===
-   action toggle_dyke_building {
+   action toggle_dyke_building() {
    	ask simulation_manager {
    		do toggle_dyke_building_mode();
    		dyke_building_active <- is_dyke_building_mode();
@@ -228,7 +228,7 @@ global {
    }
 
    // === ENHANCED GLOBAL STATUS REPORTING ===
-   action report_global_status {
+   action report_global_status() {
    	write "=== GLOBAL SIMULATION STATUS ===";
    	write "Total simulation cycles: " + total_cycles;
    	write "Dyke building mode: " + (dyke_building_active ? "ACTIVE" : "INACTIVE");
@@ -264,7 +264,7 @@ global {
 	}
    
 		// === FILE BROWSING ACTIONS ===
-	action browse_dem_file {
+	action browse_dem_file() {
 		map<string, map> results <- wizard("My wizard", eval_finish, [wizard_page("page1", "Browse DEM file (.tif)", [enter("file", file)], font("Helvetica", 14, #bold))]);
 		string new_dem_path <- nil;
 		if (results != nil) {
@@ -285,7 +285,7 @@ global {
 		}
 	} 
 	
-	action browse_water_file {
+	action browse_water_file() {
 		map<string, map> results <- wizard("My wizard", eval_finish, [wizard_page("page1", "Browse Water file (.shp)", [enter("file", file)], font("Helvetica", 14, #bold))]);
 		string new_water_path <- nil;
 		if (results != nil) {
@@ -404,7 +404,7 @@ global {
    }
 
    // === SIMULATION CONTROL ACTIONS ===
-   action start_spreading {
+   action start_spreading() {
    	do start_spreading_simulation();
    	simulation_start_time <- gama.machine_time;
    	write "🚀 SIMULATION STARTED at step " + get_current_step();
@@ -415,14 +415,14 @@ global {
 
    }
 
-   action stop_spreading {
+   action stop_spreading() {
    	do stop_spreading_simulation();
    	write "⏸️ SPREADING STOPPED at step " + get_current_step();
    	write "   Total runtime: " + ((gama.machine_time - simulation_start_time) / 1000.0 with_precision 1) + " seconds";
    	write "   Final water cells: " + get_active_water_count();
    }
 
-   action reset_spreading {
+   action reset_spreading() {
    	do reset_spreading_simulation(water_geometries, 1.5);
 
    	// Recreate dyke field with same dimensions after reset
@@ -459,17 +459,17 @@ global {
    }
 
    // === RAIN CONTROL ACTIONS ===
-   action start_light_rain {
+   action start_light_rain() {
    	do start_rain(0.1, 1.0);
    	write "🌧️ Light rain started (0.1m/step, normal intensity)";
    }
 
-   action start_heavy_rain {
+   action start_heavy_rain() {
    	do start_rain(0.3, 1.5);
    	write "⛈️ Heavy rain started (0.3m/step, 1.5x intensity)";
    }
 
-   action start_extreme_rain {
+   action start_extreme_rain() {
    	do start_rain(0.5, 2.0);
    	write "🌪️ EXTREME rain started (0.5m/step, 2x intensity)";
    }
@@ -479,7 +479,7 @@ global {
    	write "🌦️ Custom rain started (rate: " + rate + "m/step, intensity: " + intensity + "x)";
    }
 
-   action increase_rain {
+   action increase_rain() {
    	if (is_rain_active()) {
    		float current_rate <- get_rain_rate();
    		float new_rate <- current_rate + 0.05;
@@ -491,7 +491,7 @@ global {
 
    }
 
-   action decrease_rain {
+   action decrease_rain() {
    	if (is_rain_active()) {
    		float current_rate <- get_rain_rate();
    		float new_rate <- max(0.0, current_rate - 0.05);
@@ -509,13 +509,13 @@ global {
 
    }
 
-   action stop_rain_completely {
+   action stop_rain_completely() {
    	do stop_rain();
    	write "☀️ Rain stopped completely";
    }
 
    // === DYKE CONTROL ACTIONS ===
-   action clear_dykes {
+   action clear_dykes() {
    	int dyke_count <- get_active_dyke_count();
    	do clear_all_dykes();
 
@@ -527,7 +527,7 @@ global {
    	write "💥 All dykes cleared (" + dyke_count + " dyke cells removed)";
    }
 
-   action emergency_dyke_clear {
+   action emergency_dyke_clear() {
    	ask world {
    		if (dyke_building_active) {
    			do toggle_dyke_building(); // Turn off building mode
@@ -542,7 +542,7 @@ global {
    }
 
    // === NEW DYKE REMOVAL CONTROL ACTIONS ===
-   action toggle_removal_mode {
+   action toggle_removal_mode() {
    	ask world {
    		do toggle_dyke_removal();
    	}
@@ -570,7 +570,7 @@ global {
    }
 
    // === ENHANCED STATUS REPORTING ===
-   action report_status {
+   action report_status() {
    	write "=== DETAILED SIMULATION STATUS ===";
    	write "SIMULATION:";
    	write "  • Active: " + is_simulation_active();
@@ -608,7 +608,7 @@ global {
    	write "===================================";
    }
 
-   action quick_status {
+   action quick_status() {
    	string sim_status <- is_simulation_active() ? "RUNNING" : "STOPPED";
    	string rain_status <- is_rain_active() ? ("RAIN " + (get_rain_rate() with_precision 1) + "m/s") : "NO RAIN";
    	string dyke_status <- " " + get_active_dyke_count() + " dyke cells";
@@ -776,42 +776,42 @@ global {
 
    // === ACTION DEFINITIONS ===
    // Simulation control actions
-   action ask_start_spreading {
+   action ask_start_spreading() {
    	ask simulation_manager {
    		do start_spreading();
    	}
 
    }
 
-   action ask_stop_spreading {
+   action ask_stop_spreading() {
    	ask simulation_manager {
    		do stop_spreading();
    	}
 
    }
 
-   action ask_reset_spreading {
+   action ask_reset_spreading() {
    	ask simulation_manager {
    		do reset_spreading();
    	}
 
    }
 
-   action ask_report_status {
+   action ask_report_status() {
    	ask simulation_manager {
    		do report_status();
    	}
 
    }
 
-   action ask_quick_status {
+   action ask_quick_status() {
    	ask simulation_manager {
    		do quick_status();
    	}
 
    }
 
-   action ask_global_status {
+   action ask_global_status() {
    	ask world {
    		do report_global_status();
    	}
@@ -819,42 +819,42 @@ global {
    }
 
    // Rain control actions
-   action ask_start_light_rain {
+   action ask_start_light_rain() {
    	ask simulation_manager {
    		do start_light_rain();
    	}
 
    }
 
-   action ask_start_heavy_rain {
+   action ask_start_heavy_rain() {
    	ask simulation_manager {
    		do start_heavy_rain();
    	}
 
    }
 
-   action ask_start_extreme_rain {
+   action ask_start_extreme_rain() {
    	ask simulation_manager {
    		do start_extreme_rain();
    	}
 
    }
 
-   action ask_stop_rain {
+   action ask_stop_rain() {
    	ask simulation_manager {
    		do stop_rain_completely();
    	}
 
    }
 
-   action ask_increase_rain {
+   action ask_increase_rain() {
    	ask simulation_manager {
    		do increase_rain();
    	}
 
    }
 
-   action ask_decrease_rain {
+   action ask_decrease_rain() {
    	ask simulation_manager {
    		do decrease_rain();
    	}
@@ -862,48 +862,48 @@ global {
    }
 
    // Enhanced dyke control actions
-   action ask_toggle_dyke_building {
+   action ask_toggle_dyke_building() {
    	ask world {
    		do toggle_dyke_building();
    	}
 
    }
 
-   action ask_toggle_dyke_removal {
+   action ask_toggle_dyke_removal() {
    	ask world {
    		do toggle_dyke_removal();
    	}
 
    }
 
-   action ask_clear_dykes {
+   action ask_clear_dykes() {
    	ask simulation_manager {
    		do clear_dykes();
    	}
 
    }
 
-   action ask_emergency_clear {
+   action ask_emergency_clear() {
    	ask simulation_manager {
    		do emergency_dyke_clear();
    	}
 
    }
    
-   	action ask_browse_dem {
+   	action ask_browse_dem() {
 		ask world {
 			do browse_dem_file();
 		}
 
 	}
 	
-	action ask_browse_water {
+	action ask_browse_water() {
 		ask world {
 			do browse_water_file();
 		}
 	}
 	
-	action ask_update_files {
+	action ask_update_files() {
 		string new_selected_dem_path <- selected_dem_path;
 		string new_selected_water_path <- selected_water_path;
 		ask simulation {

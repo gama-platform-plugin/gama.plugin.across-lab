@@ -1,48 +1,43 @@
 package skills;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.Queue;
-import java.util.LinkedList;
-import java.util.HashMap;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.IntStream;
-import java.util.stream.Collectors;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import gama.annotations.precompiler.GamlAnnotations.action;
-import gama.annotations.precompiler.GamlAnnotations.arg;
-import gama.annotations.precompiler.GamlAnnotations.doc;
-import gama.annotations.precompiler.GamlAnnotations.skill;
-import gama.annotations.precompiler.GamlAnnotations.variable;
-import gama.annotations.precompiler.GamlAnnotations.vars;
-import gama.core.metamodel.agent.IAgent;
-import gama.core.metamodel.shape.IShape;
-import gama.core.runtime.IScope;
-import gama.core.runtime.exceptions.GamaRuntimeException;
-import gama.core.util.IList;
-import gama.core.util.matrix.GamaField;
-import gama.core.util.matrix.IField;
-import gama.core.util.matrix.IMatrix;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Queue;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
+import gama.annotations.action;
+import gama.annotations.arg;
+import gama.annotations.doc;
+import gama.annotations.skill;
+import gama.annotations.variable;
+import gama.annotations.vars;
+import gama.api.exceptions.GamaRuntimeException;
+import gama.api.types.matrix.GamaMatrixFactory;
+import gama.api.gaml.types.IType;
+import gama.api.gaml.types.Types;
+import gama.api.kernel.agent.IAgent;
+import gama.api.kernel.skill.Skill;
+import gama.api.runtime.scope.IScope;
+import gama.api.types.geometry.GamaPoint;
+import gama.api.types.geometry.IShape;
+import gama.api.types.list.GamaListFactory;
+import gama.api.types.list.IList;
+import gama.api.types.matrix.IField;
 import gama.gaml.operators.spatial.SpatialProperties;
-import gama.gaml.skills.Skill;
-import gama.gaml.types.IType;
-import gama.gaml.types.*;
-import gama.core.metamodel.topology.ITopology;
-import gama.gaml.types.GamaFieldType;
-import gama.gaml.types.Types;
-import gama.core.util.GamaListFactory;
-import gama.core.common.interfaces.IKeyword;
-import gama.gaml.operators.Maths;
-import gama.core.metamodel.shape.GamaPoint;
 
 @vars({ @variable(name = "flow_threshold", type = IType.FLOAT, init = "0.01", doc = @doc("Minimum water depth required for flow (in meters)")),
 		@variable(name = "rising_rate", type = IType.FLOAT, init = "0.3", doc = @doc("Rate at which water rises (in meters per step)")),
@@ -429,7 +424,7 @@ public class SpreadingSkill extends Skill {
 		cellToObstacleIds.clear();
 		nextObstacleId = 1;
 		
-		IField waterField = GamaFieldType.withObject(scope, 0.0, gridWidth, gridHeight, Types.FLOAT);
+		IField waterField = GamaMatrixFactory.createFieldWithObjectSizeAndType(scope, 0.0, gridWidth, gridHeight, Types.FLOAT);
 		for (int i = 0; i < gridWidth; i++) {
 			for (int j = 0; j < gridHeight; j++) {
 				waterField.set(scope, i, j, 0.0);
@@ -503,7 +498,7 @@ public class SpreadingSkill extends Skill {
 		cellToObstacleIds.clear();
 		nextObstacleId = 1;
 
-		IField waterField = GamaFieldType.withObject(scope, 0.0, gridWidth, gridHeight, Types.FLOAT);
+		IField waterField = GamaMatrixFactory.createFieldWithObjectSizeAndType(scope, 0.0, gridWidth, gridHeight, Types.FLOAT);
 		for (int i = 0; i < gridWidth; i++) {
 			for (int j = 0; j < gridHeight; j++) {
 				waterField.set(scope, i, j, 0.0);
@@ -820,7 +815,7 @@ public class SpreadingSkill extends Skill {
 		cellToObstacleIds.clear();
 		nextObstacleId = 1;
 		
-		IField waterField = GamaFieldType.withObject(scope, 0.0, gridWidth, gridHeight, Types.FLOAT);
+		IField waterField = GamaMatrixFactory.createFieldWithObjectSizeAndType(scope, 0.0, gridWidth, gridHeight, Types.FLOAT);
 		for (int i = 0; i < gridWidth; i++) {
 			for (int j = 0; j < gridHeight; j++) {
 				waterField.set(scope, i, j, 0.0);
