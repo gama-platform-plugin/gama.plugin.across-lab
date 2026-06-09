@@ -8,7 +8,7 @@ if [ "$IS_DEPLOY" == "true" ]; then
     BRANCH="${REF_NAME:-$(git rev-parse --abbrev-ref HEAD)}"
 else
     # Get the name of the default branch
-    BRANCH="$REF_NAME"
+    BRANCH="${REF_NAME:-$(git symbolic-ref --short refs/remotes/origin/HEAD | sed 's/origin\///')}"
     SKIP_PLUGINS="-Djarsigner.skip=true -Dwagon.skip=true"
 fi
 
