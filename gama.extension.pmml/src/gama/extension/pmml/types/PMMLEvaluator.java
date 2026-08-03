@@ -8,8 +8,12 @@ import org.dmg.pmml.MiningFunction;
 import org.jpmml.evaluator.Evaluator;
 import org.jpmml.evaluator.InputField;
 import org.jpmml.evaluator.OutputField;
+import org.jpmml.evaluator.ResidualField;
 import org.jpmml.evaluator.TargetField;
 
+import gama.annotations.doc;
+import gama.annotations.variable;
+import gama.annotations.vars;
 import gama.api.exceptions.GamaRuntimeException;
 import gama.api.gaml.types.IType;
 import gama.api.gaml.types.Types;
@@ -98,6 +102,18 @@ public class PMMLEvaluator implements Evaluator, IValue{
 	@Override
 	public Map<String, ?> evaluate(Map<String, ?> arguments) {
 		return internalEvaluator.evaluate(arguments);
+	}
+
+
+	@Override
+	public List<ResidualField> getResidualFields() {
+		return internalEvaluator.getResidualFields();
+	}
+
+
+	@Override
+	public List<InputField> getSupplementaryFields() {
+		return internalEvaluator.getSupplementaryFields();
 	}
 
 }
