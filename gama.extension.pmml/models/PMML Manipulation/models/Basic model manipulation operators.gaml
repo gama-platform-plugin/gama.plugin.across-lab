@@ -29,13 +29,13 @@ global {
 
 		write "If the model has some tests included, we can run them to check that they are still working inside of GAMA: " + verify_evaluator(eval);
 		
-		list<string> input_fields <- get_input_field_names(eval);
+		list<string> input_fields <- eval.input_fields;
 		write "To make an evaluation, the model require those input fields: " + input_fields;
 
-		list<string> output_fields <- get_output_field_names(eval);
+		list<string> output_fields <- eval.output_fields;
 		write "The output fields will be: " + output_fields;
 		
-		list<string> target_fields <- get_target_field_names(eval);
+		list<string> target_fields <- eval.target_fields;
 		write "The target fields will be: " + target_fields;
 		
 		

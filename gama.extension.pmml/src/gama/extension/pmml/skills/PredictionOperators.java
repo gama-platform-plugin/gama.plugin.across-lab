@@ -19,8 +19,6 @@ import gama.api.GAMA;
 import gama.api.exceptions.GamaRuntimeException;
 import gama.api.gaml.types.Types;
 import gama.api.runtime.scope.IScope;
-import gama.api.types.list.GamaListFactory;
-import gama.api.types.list.IList;
 import gama.api.types.map.GamaMapFactory;
 import gama.api.types.map.IMap;
 import gama.extension.pmml.types.PMMLEvaluator;
@@ -61,59 +59,6 @@ public class PredictionOperators {
 		}
 	}
 
-
-	@operator(value="get_input_field_names",
-			doc = @doc("Fetch the input fields. Returns a list of the field names. In case of error or if the evaluator doesn't exist, returns an empty list.")
-			)
-	public static IList<String> getInputFieldNames(final IScope scope, final PMMLEvaluator evaluator){
-		var ret = GamaListFactory.<String>create();
-		try {
-			for(var field : evaluator.getInputFields()) {
-				ret.add(field.getName());
-			}				
-		}
-		catch (Exception ex) {
-			GAMA.reportAndThrowIfNeeded(scope, GamaRuntimeException.create(ex, scope), false);
-			return GamaListFactory.create(Types.NO_TYPE);
-		}
-		return ret;
-	}
-	
-	@operator(value="get_target_field_names",
-			doc = @doc("Fetch the target fields. Returns a list of the field names. In case of error or if the evaluator doesn't exist, returns an empty list.")
-			)
-	public static IList<String> getTargetFieldNames(final IScope scope, final PMMLEvaluator evaluator){
-
-		var ret = GamaListFactory.<String>create();
-		try {
-			for(var field : evaluator.getTargetFields()) {
-				ret.add(field.getName());
-			}				
-		}
-		catch (Exception ex) {
-			GAMA.reportAndThrowIfNeeded(scope, GamaRuntimeException.create(ex, scope), false);
-			return GamaListFactory.create(Types.NO_TYPE);
-		}
-		return ret;
-	}
-	
-	@operator(value="get_output_field_names",
-			doc = @doc("Fetch the output fields. Returns a list of the field names. In case of error or if the evaluator doesn't exist, returns an empty list.")
-			)
-	public static IList<String> getOutputFieldNames(final IScope scope, final PMMLEvaluator evaluator){
-		var ret = GamaListFactory.<String>create();
-		try {
-			for(var field : evaluator.getOutputFields()) {
-				ret.add(field.getName());
-			}				
-		}
-		catch (Exception ex) {
-			GAMA.reportAndThrowIfNeeded(scope, GamaRuntimeException.create(ex, scope), false);
-			return GamaListFactory.create(Types.NO_TYPE);
-		}
-		return ret;
-	}
-	
 	
 	@operator(value="evaluate",
 			doc = @doc("Evaluates a model given a set of parameters. Returns a map of the field names associated with their values. In case of error or if the evaluator doesn't exist, returns an empty map.")

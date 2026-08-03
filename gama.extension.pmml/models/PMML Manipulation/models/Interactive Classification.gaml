@@ -52,8 +52,8 @@ global {
 		// we load the classification model that was trained on this data
 		trained_model <- load_eval_prediction("../includes/clustering.pmml");
 		// just to check that everything is fine we display the expected input and output field names
-		write "The model has been loaded, the expected input fields are: " + get_input_field_names(trained_model);
-		write "And it will output a map containing those fields: " + get_output_field_names(trained_model);
+		write "The model has been loaded, the expected input fields are: " + trained_model.input_fields;
+		write "And it will output a map containing those fields: " + trained_model.output_fields;
 		
 	}
 	
